@@ -1,0 +1,44 @@
+{
+  "name": "flutterwave_nodeapi",
+  "version": "0.0.1",
+  "description": "Implementation of the flutterwave nodejs library",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flutterwave/nodeAPI.git"
+  },
+  "keywords": [
+    "flutterwave",
+    "accept",
+    "payment",
+    "payment",
+    "gateway"
+  ],
+  "author": "Olufemi Olanipekun <iolufemi@ymail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Flutterwave/nodeAPI/issues"
+  },
+  "homepage": "https://github.com/Flutterwave/nodeAPI#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "lodash": "^3.10.1",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-apidoc": "^0.2.4",
+    "gulp-jshint": "^2.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "jshint": "^2.9.3",
+    "jshint-stylish": "^2.2.1",
+    "mocha": "^3.0.2"
+  }
+}
