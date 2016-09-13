@@ -9,6 +9,11 @@ gulp.task('default',function(){
   
 });
 
+gulp.task('test',function(){
+  // Start Here
+  
+});
+
 gulp.task('lint', function(){
   return gulp.src(['*.js','**/*.js','**/**/*.js'])
   .pipe(jsHint())

@@ -1,44 +1,43 @@
 "use strict";
-var express = require('express');
-var app = express();
-var log = require('./services/logger');
+var cluster = require('cluster');
 var config = require('./config');
-var response = require('./services/response');
-var bodyParser = require('body-parser');
+var log = require('./services/logger');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(bodyParser.raw());
-app.use(bodyParser.text());
+if (cluster.isMaster && config.env === 'production') {
+	// Count the machine's CPUs
+	var cpuCount = require('os').cpus().length;
 
-app.use(response);
-app.use(function(req,res,next){
-    log.info('[TIME: '+new Date().toISOString()+'] [IP Address: '+req.ip+'] [METHOD: '+req.method+'] [URL: '+req.originalUrl+']');
-    next();
-});
+    // Create a worker for each CPU
+    for (var i = 0; i < cpuCount; i += 1) {
+    	cluster.fork();
+    }
 
+    // Listen for dying workers
+    cluster.on('exit', function (worker) {
+        // Replace the dead worker,
+        // we're not sentimental
+        log.info('Worker %d died', worker.id);
+        cluster.fork();
+    });
 
-if(config.trustProxy === 'yes'){
-    app.enable('trust proxy');
+} else {
+	var express = require('express');
+	var app = express();
+	var router = require('./routes');
+
+	if(config.trustProxy === 'yes'){
+		app.enable('trust proxy');
+	}
+
+	app.use('/',router);
+	
+	if(config.env === 'production'){
+		log.info('Worker %d running!', cluster.worker.id);
+	}
+	
+
+	app.listen(config.port, function () {
+		log.info('listening on port '+config.port+'!');
+	});
+
 }
-
-
-app.get('/', function (req, res) {
-  res.ok(req.query);
-});
-
-app.post('/', function (req, res) {
-  res.ok(req.body);
-});
-
-app.use(function(req, res, next) { // jshint ignore:line
-  res.notFound();
-});
-
-app.use(log.errorHandler);
-
-app.listen(config.port, function () {
-  log.info('listening on port '+config.port+'!');
-});
-
-

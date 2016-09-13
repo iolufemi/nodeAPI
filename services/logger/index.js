@@ -4,7 +4,7 @@ var config = require('../../config');
 var response = require('../response');
 
 if(config.env === 'production'){
-	log.add(log.transports.File, { filename: 'app.log' }, {level: 'warn'});
+	log.add(log.transports.File, { filename: 'app.log', level: 'warn'});
 }
 module.exports = log;
 module.exports.errorHandler = function(err, req, res, next){ // jshint ignore:line
