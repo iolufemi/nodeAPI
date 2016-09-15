@@ -2,10 +2,20 @@
 var log = require('winston');
 var config = require('../../config');
 var response = require('../response');
+var bugsnag = require('bugsnag');
+var winstonBugsnag = require('winston-bugsnag');
 
 if(config.env === 'production'){
-	log.add(log.transports.File, { filename: 'app.log', level: 'warn'});
+	if(!config.bugsnagKey){
+		log.add(log.transports.File, { filename: 'app.log', level: 'warn'});
+		log.remove(log.transports.Console);
+	}else{
+		bugsnag.register(config.bugsnagKey);
+		log.add(winstonBugsnag,{level: 'warn'});
+		log.remove(log.transports.Console);
+	}
 }
+
 module.exports = log;
 module.exports.errorHandler = function(err, req, res, next){ // jshint ignore:line
 	response(req, res, next);
