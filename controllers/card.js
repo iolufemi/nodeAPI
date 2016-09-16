@@ -1,11 +1,13 @@
 "use strict";
 var flutterwave = require('../services/flutterwave');
 var config = require('../config');
+var debug = require('debug')('card');
 
 module.exports = {
 	tokenize: function(req, res, next){
+		debug('what i got: ', req.body);
 		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
-		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
 		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
 		var cardno = req.body.cardno;
 		var cvv = req.body.cvv;
@@ -26,7 +28,7 @@ module.exports = {
 
 	charge: function(req, res, next){
 		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
-		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
 		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
 		var amount = req.body.amount;
 		var cardno = req.body.cardno;
@@ -54,11 +56,11 @@ module.exports = {
 
 	validate: function(req, res, next){
 		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
-		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
 		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
 		var otptransactionidentifier = req.body.otptransactionidentifier;
 		var otp = req.body.otp;
-		
+
 		card.validate(otptransactionidentifier, otp)
 		.then(function(resp){
 			res.ok(resp);

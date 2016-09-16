@@ -2,6 +2,7 @@
 var config = require('../../config');
 var Flutterwave = require('flutterwave');
 var q = require('q');
+var debug = require('debug')('card');
 
 
 /**
@@ -10,13 +11,16 @@ var q = require('q');
  * @return {object}
  */
  module.exports = function(flutterwaveApiKey, flutterwaveMerchantKey){
+ 	debug('Flutterwave keys: ', flutterwaveApiKey, flutterwaveMerchantKey);
 
  	var flutterwave;
  	if(config.env !== "production"){
- 		flutterwave = new Flutterwave(flutterwaveApiKey,flutterwaveMerchantKey);
+ 		flutterwave = new Flutterwave(flutterwaveApiKey, flutterwaveMerchantKey);
  	}else{
- 		flutterwave = new Flutterwave(flutterwaveApiKey,flutterwaveMerchantKey,true);
+ 		flutterwave = new Flutterwave(flutterwaveApiKey, flutterwaveMerchantKey, true);
  	}
+
+ 	debug('Flutterwave obj: ', flutterwave);
 
  	return {
 	// Tokenize a transaction 
@@ -45,7 +49,7 @@ var q = require('q');
 	 				if(error){
 	 					reject(new Error(error));
 	 				}else{
-	 					var result = body;
+	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
 	 					}
@@ -101,7 +105,7 @@ var q = require('q');
 	 				if(error){
 	 					reject(new Error(error));
 	 				}else{
-	 					var result = body;
+	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
 	 					}
@@ -135,7 +139,7 @@ var q = require('q');
 	 				if(error){
 	 					reject(new Error(error));
 	 				}else{
-	 					var result = body;
+	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
 	 					}

@@ -7,10 +7,11 @@ var winstonBugsnag = require('winston-bugsnag');
 
 if(config.env === 'production'){
 	if(!config.bugsnagKey){
-		log.add(log.transports.File, { filename: 'app.log', level: 'warn'});
+		log.add(log.transports.File, { filename: 'app-'+new Date().toDateString().split(' ').join('_')+'.log', level: 'warn'});
 		log.remove(log.transports.Console);
 	}else{
 		bugsnag.register(config.bugsnagKey);
+		log.add(log.transports.File, { filename: 'app-'+new Date().toDateString().split(' ').join('_')+'.log', level: 'warn'});
 		log.add(winstonBugsnag,{level: 'warn'});
 		log.remove(log.transports.Console);
 	}
