@@ -8,6 +8,7 @@ var log = require('../services/logger');
 var me = require('../package.json');
 var card = require('./card');
 var initialize = require('./initialize');
+var expressValidator = require('express-validator');
 
 router.use(function(req,res,next){
 	log.info('[TIME: '+new Date().toISOString()+'] [IP Address: '+req.ip+'] [METHOD: '+req.method+'] [URL: '+req.originalUrl+']');
@@ -20,6 +21,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.raw());
 router.use(bodyParser.text());
 router.use(encryption.interpreter);
+router.use(expressValidator());
 
 
 router.get('/', function (req, res) {

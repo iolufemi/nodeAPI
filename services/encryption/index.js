@@ -18,7 +18,8 @@ module.exports = {
 				if (err){
 					reject(new Error(err));
 				}else{
-					resolve(aesjs.util.convertBytesToString(key, 'hex'));
+					var randomNumber = Math.floor((Math.random() * 9999) + 1);
+					resolve(new Buffer(aesjs.util.convertBytesToString(key, 'base64')+'//////'+randomNumber).toString('base64'));
 				}
 			});
 		});
@@ -27,7 +28,14 @@ module.exports = {
 	encrypt: function(text, key){
 		debug('started encryption');
 		debug('using key: ', key);
-		key = aesjs.util.convertStringToBytes(key, 'hex');
+		key = new Buffer(key, 'base64').toString('utf-8');
+		debug('What i see here: ', key);
+		var splitKey = key.split('//////');
+		key = splitKey[0];
+		var counter = ((splitKey[1] * 1) * 10) / 5;
+		debug('our counter: ', counter);
+		debug('our key: ', key);
+		key = aesjs.util.convertStringToBytes(key, 'base64');
 		debug('in buffer: ', key);
 
 		return q.Promise(function(resolve){
@@ -38,11 +46,11 @@ module.exports = {
 		    debug('our text: ',text);
 		    var textBytes = aesjs.util.convertStringToBytes(text);
 		    debug('textBytes: ',textBytes);
-		    var aesCbc = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(11));
+		    var aesCbc = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(counter));
 		    var encryptedBytes = aesCbc.encrypt(textBytes);
 
 		    // Convert our bytes back into text
-		    var encryptedText = aesjs.util.convertBytesToString(encryptedBytes, 'hex');
+		    var encryptedText = aesjs.util.convertBytesToString(encryptedBytes, 'base64');
 		    debug('finished encryption');
 		    resolve(encryptedText);
 		});
@@ -50,16 +58,23 @@ module.exports = {
 
 	decrypt: function(text, key){
 		debug('text: ',text);
-		key = aesjs.util.convertStringToBytes(key, 'hex');
+		key = new Buffer(key, 'base64').toString('utf-8');
+		debug('What i see here: ', key);
+		var splitKey = key.split('//////');
+		key = splitKey[0];
+		var counter = ((splitKey[1] * 1) * 10) / 5;
+		debug('our counter: ', counter);
+		debug('our key: ', key);
+		key = aesjs.util.convertStringToBytes(key, 'base64');
 
 		return q.Promise(function(resolve){
 			debug('our key2: ', key);
 		    // Convert text to bytes
-		    var textBytes = aesjs.util.convertStringToBytes(text, 'hex');
+		    var textBytes = aesjs.util.convertStringToBytes(text, 'base64');
 
 		    // The cipher-block chaining mode of operation maintains internal
 	        // state, so to decrypt a new instance must be instantiated.
-	        var aesCbc = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(11));
+	        var aesCbc = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(counter));
 	        var decryptedBytes = aesCbc.decrypt(textBytes);
 
 	        // Convert our bytes back into text
