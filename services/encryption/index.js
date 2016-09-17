@@ -87,7 +87,7 @@ module.exports = {
 		var encryption = require('./');
 		if(req.header('x-tag')){
 			res.set('x-tag', req.header('x-tag'));
-			res.set('Access-Control-Expose-Headers','*');
+			res.set('Access-Control-Expose-Headers','x-tag');
 
 			var key = req.header('x-tag');
 
