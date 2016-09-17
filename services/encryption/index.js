@@ -19,7 +19,7 @@ module.exports = {
 					reject(new Error(err));
 				}else{
 					var randomNumber = Math.floor((Math.random() * 9999) + 1);
-					resolve(new Buffer(aesjs.util.convertBytesToString(key, 'base64')+'//////'+randomNumber).toString('base64'));
+					resolve(new Buffer(aesjs.util.convertBytesToString(key, 'hex')+'//////'+randomNumber).toString('base64'));
 				}
 			});
 		});
@@ -35,7 +35,7 @@ module.exports = {
 		var counter = ((splitKey[1] * 1) * 10) / 5;
 		debug('our counter: ', counter);
 		debug('our key: ', key);
-		key = aesjs.util.convertStringToBytes(key, 'base64');
+		key = aesjs.util.convertStringToBytes(key, 'hex');
 		debug('in buffer: ', key);
 
 		return q.Promise(function(resolve){
@@ -50,7 +50,7 @@ module.exports = {
 		    var encryptedBytes = aesCbc.encrypt(textBytes);
 
 		    // Convert our bytes back into text
-		    var encryptedText = aesjs.util.convertBytesToString(encryptedBytes, 'base64');
+		    var encryptedText = aesjs.util.convertBytesToString(encryptedBytes, 'hex');
 		    debug('finished encryption');
 		    resolve(encryptedText);
 		});
@@ -65,12 +65,12 @@ module.exports = {
 		var counter = ((splitKey[1] * 1) * 10) / 5;
 		debug('our counter: ', counter);
 		debug('our key: ', key);
-		key = aesjs.util.convertStringToBytes(key, 'base64');
+		key = aesjs.util.convertStringToBytes(key, 'hex');
 
 		return q.Promise(function(resolve){
 			debug('our key2: ', key);
 		    // Convert text to bytes
-		    var textBytes = aesjs.util.convertStringToBytes(text, 'base64');
+		    var textBytes = aesjs.util.convertStringToBytes(text, 'hex');
 
 		    // The cipher-block chaining mode of operation maintains internal
 	        // state, so to decrypt a new instance must be instantiated.
