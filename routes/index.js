@@ -9,7 +9,9 @@ var me = require('../package.json');
 var card = require('./card');
 var initialize = require('./initialize');
 var expressValidator = require('express-validator');
+var cors = require('cors');
 
+router.use(cors());
 router.use(response);
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -23,6 +25,7 @@ router.use(function(req,res,next){
 	next();
 });
 
+router.options('*', cors());
 
 router.get('/', function (req, res) {
 	res.ok({name: me.name, version: me.version});
