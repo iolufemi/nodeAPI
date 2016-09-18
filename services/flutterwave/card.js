@@ -52,6 +52,8 @@ var debug = require('debug')('card');
 	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
+	 					}else{
+	 						reject(result);
 	 					}
 
 	 					if(response.flutterwaveRequestRequiresValidation){
@@ -108,6 +110,8 @@ var debug = require('debug')('card');
 	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
+	 					}else{
+	 						reject(result);
 	 					}
 
 	 					if(response.flutterwaveRequestRequiresValidation){
@@ -142,6 +146,8 @@ var debug = require('debug')('card');
 	 					var result = body.data;
 	 					if(response.flutterwaveRequestSuccessful){
 	 						result.requiresValidation = false;
+	 					}else{
+	 						reject(result);
 	 					}
 
 	 					if(response.flutterwaveRequestRequiresValidation){
