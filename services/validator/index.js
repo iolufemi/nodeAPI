@@ -12,9 +12,13 @@ module.exports = function(req, res, next){
 			if(parameters[n]){
 				debug('validating '+parameters[n]);
 				req.check(parameters[n], parameters[n]+' is required').notEmpty();
-				req.sanitize(parameters[n]).escape();
-				req.sanitize(parameters[n]).trim();
-
+				if(parameters[n] === 'otptransactionidentifier' || parameters[n] === 'trxreference' || parameters[n] === 'trxauthorizeid'){
+					// Skip
+				}else{
+					req.sanitize(parameters[n]).escape();
+					req.sanitize(parameters[n]).trim();
+				}
+				
 				if((n*1) === last){
 					debug('validation over, lets take it home...');
 					var errors = req.validationErrors();
