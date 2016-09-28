@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "6"
+  - "5"
+  - "4"
+before_script:
+  - npm install -g gulp mocha gulp-cli
+install:
+  - npm install
+script: 
+  - gulp test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
