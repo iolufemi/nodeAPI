@@ -31,6 +31,10 @@ router.get('/', function (req, res) {
 	res.ok({name: me.name, version: me.version});
 });
 
+router.get('/.well-known/acme-challenge/P6SmstLpCrrp8nKVkSuo5bJnFsDUm84rmoUuBbtLx6M', function(req,res){
+	res.send('P6SmstLpCrrp8nKVkSuo5bJnFsDUm84rmoUuBbtLx6M.IFmrIbyBuFT3_2pSm-kaJyhHsJtHwshSiNFfxgIAPQw');
+});
+
 router.use('/card', card);
 
 router.use('/', initialize);
