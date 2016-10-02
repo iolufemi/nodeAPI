@@ -46,6 +46,9 @@ module.exports = {
 
 		card.charge(amount,cardno,cvv,expirymonth,expiryyear,currency,custid,authmodel,narration,country,responseurl,pin,bvn)
 		.then(function(resp){
+			if(resp.responsehtml && resp.responsehtml !== 'null'){
+				resp.responsehtml = card.base.decryptText(resp.responsehtml);
+			}
 			res.ok(resp);
 		})
 		.catch(function(err){

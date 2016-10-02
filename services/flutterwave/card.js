@@ -23,6 +23,7 @@ var debug = require('debug')('card');
  	debug('Flutterwave obj: ', flutterwave);
 
  	return {
+ 		base: flutterwave,
 	// Tokenize a transaction 
 	/**
 	 * @param  {cardno}
