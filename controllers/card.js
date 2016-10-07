@@ -71,6 +71,133 @@ module.exports = {
 		.catch(function(err){
 			next(err);
 		});
+	},
+
+	preauth: function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var chargetoken= req.body.chargetoken;
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+
+		card.preauth(chargetoken, amount, currency).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+
+	},
+
+	capture : function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+		var trxreference= req.body.trxreference;
+		var trxauthorizeid= req.body.trxauthorizeid;
+
+		card.capture(amount, currency, trxreference, trxauthorizeid).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	},
+
+	void : function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+		var trxreference= req.body.trxreference;
+		var trxauthorizeid= req.body.trxauthorizeid;
+
+		card.void(amount, currency, trxreference, trxauthorizeid).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	},
+
+	refund : function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+		var trxreference= req.body.trxreference;
+		var trxauthorizeid= req.body.trxauthorizeid;
+
+		card.refund(amount, currency, trxreference, trxauthorizeid).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	},
+
+	enquiry : function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+		var trxreference= req.body.trxreference;
+		var trxauthorizeid= req.body.trxauthorizeid;
+
+		card.enquiry(amount, currency, trxreference, trxauthorizeid).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	}, 
+
+	validateEnquiry: function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var currency= req.body.currency;
+		var trxreference= req.body.trxreference;
+		var trxauthorizeid= req.body.trxauthorizeid;
+
+		card.validateEnquiry(amount, currency, trxreference, trxauthorizeid).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	},
+
+	withdraw: function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var amount= req.body.amount;
+		var accountno= req.body.accountno;
+		var validateoption= req.body.validateoption;
+		var trxreference= req.body.trxreference;
+
+		card.withdraw(amount, accountno, validateoption, trxreference).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
+	},
+
+	status: function(req, res, next){
+		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
+		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
+		var card = flutterwave.card(flutterwaveApiKey, flutterwaveMerchantKey);
+		var trxreference= req.body.trxreference;
+
+		card.status(trxreference).then(function(resp){
+			res.ok(resp);
+		}).catch(function(err){
+			next(err);
+		});
 	}
+
+	
 
 };

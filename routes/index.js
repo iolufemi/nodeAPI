@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var log = require('../services/logger');
 var me = require('../package.json');
 var card = require('./card');
+var account= require('./account');
 var initialize = require('./initialize');
 var expressValidator = require('express-validator');
 var cors = require('cors');
@@ -36,6 +37,7 @@ router.get('/.well-known/acme-challenge/P6SmstLpCrrp8nKVkSuo5bJnFsDUm84rmoUuBbtL
 });
 
 router.use('/card', card);
+router.use('/account', account);
 
 router.use('/', initialize);
 
