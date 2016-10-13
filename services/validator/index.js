@@ -5,6 +5,7 @@ var debug = require('debug')('validator');
 module.exports = function(req, res, next){
 	debug('starting validation check.');
 	debug('What we got: ', req.body);
+	console.log(req.body);
 	var parameters = req._required;
 	if(parameters.length){
 		var last = parameters.length - 1;
@@ -20,18 +21,23 @@ module.exports = function(req, res, next){
 				}
 				
 				if((n*1) === last){
+					
 					debug('validation over, lets take it home...');
 					var errors = req.validationErrors();
 					if (errors) {
 						res.badRequest(util.inspect(errors), 'Validation error.');
+						
 					}else{
+						
 						next();
 					}
 				}
 			}
 		}
 	}else{
+		
 		next();
+		
 	}
 	
 };

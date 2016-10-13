@@ -46,4 +46,96 @@ router.post('/validate', function (req, res, next){
 validate,
 cardController.validate);
 
+router.post("/preauth", function(req, res, next){
+	req._required=[
+		'chargetoken',
+		'amount',
+		'currency'
+	];
+	next();
+},
+validate, 
+cardController.preauth);
+
+router.post("/capture", function(req, res, next){
+	req._required=[
+		'amount',
+		'currency',
+		'trxreference',
+		'trxauthorizeid'
+	];
+	next();
+},
+validate, 
+cardController.capture);
+
+router.post("/void", function(req, res, next){
+	req._required=[
+		'amount',
+		'currency',
+		'trxreference',
+		'trxauthorizeid'
+	];
+	next();
+},
+validate, 
+cardController.void);
+
+router.post("/refund", function(req, res, next){
+	req._required=[
+		'amount',
+		'currency',
+		'trxreference',
+		'trxauthorizeid'
+	];
+	next();
+},
+validate, 
+cardController.refund);
+
+router.post("/enquiry", function(req, res, next){
+	req._required=[
+		'amount',
+		'currency',
+		'trxreference',
+		'trxauthorizeid'
+	];
+	next();
+},
+validate, 
+cardController.enquiry);
+
+router.post("/validateEnqiry", function(req, res, next){
+	req._required=[
+		'amount',
+		'currency',
+		'trxreference',
+		'trxauthorizeid'
+	];
+	next();
+},
+validate, 
+cardController.validateEnquiry);
+
+router.post("/withdraw", function(req, res, next){
+	req._required=[
+		'amount',
+		'accountno',
+		'validateoption',
+		'trxreference'
+	];
+	next();
+},
+validate, 
+cardController.withdraw);
+
+router.post("/status", function(req, res, next){
+	req._required=[
+		'trxreference'
+	];
+	next();
+},
+validate, 
+cardController.status);
+
 module.exports = router;
