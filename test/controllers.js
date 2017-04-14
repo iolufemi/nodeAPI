@@ -1,8 +1,8 @@
 "use strict";
 var chai = require('chai');
 chai.should();
-var initialize = require('../controllers/initialize');
-var card = require('../controllers/card');
+// var initialize = require('../controllers/initialize');
+// var card = require('../controllers/card');
 
 describe('#CardPayments', function(){
 	it('should be an object');
@@ -21,4 +21,4 @@ describe('#CardPayments', function(){
 
 describe('#Initialize', function(){
 	it('respond with x-tag');
-})
+});
