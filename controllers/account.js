@@ -82,7 +82,6 @@ module.exports = {
 		var flutterwaveApiKey = req.header('x-apiKey') ? req.header('x-apiKey') : config.flutterwaveApiKey;
 		var flutterwaveMerchantKey = req.header('x-merchantKey') ? req.header('x-merchantKey') : config.flutterwaveMerchantKey;
 		var account = flutterwave.account(flutterwaveApiKey, flutterwaveMerchantKey);
-		var accountNumber = req.body.accountNumber;
 		var accountToken= req.body.accountToken;
 		var billingamount= req.body.billingamount; 
 		var debitnarration= req.body.debitnarration;
@@ -182,4 +181,4 @@ module.exports = {
 		});
 	}
 
-}
+};

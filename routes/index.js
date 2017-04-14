@@ -32,8 +32,8 @@ router.get('/', function (req, res) {
 	res.ok({name: me.name, version: me.version});
 });
 
-router.get('/.well-known/acme-challenge/P6SmstLpCrrp8nKVkSuo5bJnFsDUm84rmoUuBbtLx6M', function(req,res){
-	res.send('P6SmstLpCrrp8nKVkSuo5bJnFsDUm84rmoUuBbtLx6M.IFmrIbyBuFT3_2pSm-kaJyhHsJtHwshSiNFfxgIAPQw');
+router.get('/.well-known/acme-challenge/xvArhQBSilF4V30dGUagNAZ96ASipB0b0ex0kXn0za8', function(req,res){
+	res.send('xvArhQBSilF4V30dGUagNAZ96ASipB0b0ex0kXn0za8._v6aFbaRYWeOmSebtlD-X4Ixf5tPsyULMsXM8HjsK-Q');
 });
 
 router.use('/card', card);
